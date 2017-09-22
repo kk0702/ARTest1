@@ -58,8 +58,8 @@ UINT MainLoop(WindowManager *winmgr)
 	g.Register(&source);
 
 	Touchable ball(&g, L"ball.x");	
-	ball.SetScale(2.0f, 2.0f, 2.0f);
-	ball.SetPosition(0.0f, 6.0f, 0.0f,GL_ABSOLUTE);		
+	ball.SetScale(3.0f, 3.0f, 3.0f);
+	ball.SetPosition(0.0f, 0.0f, 0.0f,GL_ABSOLUTE);		
 	g.Register(&ball);
 
 	InputHandler *keyIn = window.GetInputHandler();
@@ -73,6 +73,7 @@ UINT MainLoop(WindowManager *winmgr)
 		if (keyIn->GetKeyTrig('Q')) break;
 			
 		subtract_mask(&hitArea,&stored,&source,0x20202020);	
+	
 		
 		ball.react(&hitArea);
 		ball.move();
@@ -110,7 +111,7 @@ inline bool Touchable::get_overlapping_center(Texture* hitArea, int *pGx, int *p
 	return pixel_count > threshold;
 }
 
-inline void Touchable::react(Texture* _hitArea)
+inline void Touchable::react(Texture* _hitArea)//‚ ‚½‚è”»’è
 {
 	int gx,gy;
 	bool overlapping = get_overlapping_center(_hitArea, &gx, &gy,100);
@@ -127,6 +128,7 @@ inline void Touchable::react(Texture* _hitArea)
 			}
 			break;
 		case IN_TOUCH:
+			SetRotationZ(-0.1f);
 			if (!overlapping)
 				state = OUT_TOUCH;
 			break;
@@ -155,7 +157,8 @@ inline void Touchable::move()
 	vx *= 0.8f;
 	vy *= 0.8f;
 
-   SetPosition(vx, vy, 0.0f, GL_RELATIVE);
+	
+  // SetPosition(vx, vy, 0.0f, GL_RELATIVE);
 }
 
 
